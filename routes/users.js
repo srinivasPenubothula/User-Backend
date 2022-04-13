@@ -40,13 +40,36 @@ router.post('/', async (req,res) =>{
     
 
 /**update one */
-router.patch('/:id', (req,res) =>{
+router.patch('/:id', getUser, async (req,res) =>{
+    if(req.body.name!==null)
+    {
+        res.user.name=req.body.name
+    }
+    if(req.body.userToChannel!==null)
+    {
+        res.user.userToChannel=req.body.userToChannel
+    }
+    try{
+        const updateUser=await res.user.save()
+        res.json(updateUser)
+    }
+    catch(err){
+        res.status(err).json({message:'err.message'})
+    }
     
 })
 
 /**delete one  */
-router.delete('/:id', (req,res) =>{
-    res.user
+router.delete('/:id', getUser, async(req,res) =>{
+    try{
+        await  res.user.remove(
+            res.json({message:'User Succesfully deleted'})
+        )
+
+    }
+    catch(err){
+        res.status(500).json({message:'error.message'})   
+    }
 })
 
 async function getUser(req,res,next){
