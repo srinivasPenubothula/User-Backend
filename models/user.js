@@ -9,7 +9,7 @@ const userSchema= new mongoose.Schema({
         type:String,
         required:true
     },
-    userDate: {
+    createdAt: {
         type:String,
         required:true,
         default:Date.now
